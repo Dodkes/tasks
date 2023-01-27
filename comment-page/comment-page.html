@@ -5,25 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="comment-page.css">
+    <script src="accounts.js"></script>
+    <script src="comment-page.js" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <title>Comment page</title>
 </head>
 <body>
     <div class="main-container">
-        <div class="notification">
-            Log in
-        </div>
-
-        <form action="" class="login-container">
+        <button id="login-panel-button">Log in</button>
+        <div id="loggedin-panel-container"></div>
+        <form action="" id="login-container">
             <div class="login-content">
-            <div class="login-header">LOGIN</div>
+                <button id="close-button">✕</button>
+                <div class="login-header">LOGIN</div>
                 <label id="username" for="username">Username</label>
-                <input type="text" name="username">
+                <input id="username-input" type="text" name="username">
+                <div id="username-message"></div>
                 <br><br>
                 <label for="username">Password</label>
-                <input type="password" name="username">
+                <input id="password-input" type="password" name="username">
+                <div id="password-message"></div>
                 <div class="login-buttons-container">
                     <button class="login-button">Login</button>
-                    <button class="login-button">Register</button>
+                    <button class="register-button">Register</button>
                 </div>
         </div>
 

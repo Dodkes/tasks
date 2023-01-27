@@ -12,12 +12,21 @@ body {
     width: 1920px;
 }
 
-.notification {
+#loggedin-panel-container, #login-panel-button {
     width: 20%;
     text-align: center;
     position: absolute;
     top: 0;
     right: 0;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+#login-panel-button:hover {
+    color: #33ffbb;
+    text-shadow: 1px 1px 1px black;
 }
 
 .main-container {
@@ -28,7 +37,7 @@ body {
     left: 15%;
 }
 
-.login-container {
+#login-container {
     position: relative;
     width: 30%;
     border-radius: 5px;
@@ -38,6 +47,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
     text-shadow: 1px 2px 2px black;
+    display: none;
 }
 
 input {
@@ -61,7 +71,7 @@ input:focus{
     margin: 20px;
 }
 
-.login-button {
+.login-button, .register-button {
     margin: 5px 0;
     border-radius: 50px;
     background-color: #33ffbb;
@@ -71,9 +81,10 @@ input:focus{
     width: 100%;
     box-shadow: 1px 1px 1px 1px black;
     transition: 0.2s;
+    outline: none;
 }
 
-.login-button:hover {
+.login-button:hover, .register-button:hover {
     background-color: rgb(14, 12, 12);
     color: #33ffbb;
 }
@@ -84,4 +95,25 @@ button:hover{
 
 .login-buttons-container {
     margin-top: 10px;
+}
+
+#username-message, #password-message  {
+    font-size: 12px;
+    color: rgb(209, 125, 125);
+    width: 100%;
+    height: 12px;
+}
+
+#close-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-weight: bold;
+}
+
+#close-button:hover {
+    color: #33ffbb;
 }
