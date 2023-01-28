@@ -3,6 +3,7 @@ const loginPanelButton = document.getElementById('login-panel-button')
 const loginButton = document.querySelector('.login-button')
 const registerButton = document.querySelector('.register-button')
 const closeButton = document.getElementById('close-button')
+const logoffButton = document.getElementById('logoff-button')
 //containers
 const loginContainer = document.getElementById('login-container')
 const usernameInput = document.getElementById('username-input')
@@ -10,26 +11,65 @@ const passwordInput = document.getElementById('password-input')
 const usernameMessage = document.getElementById('username-message')
 const passwordMessage = document.getElementById('password-message')
 const loggedInPanelContainer = document.getElementById('loggedin-panel-container')
+const loggedInUsername = document.getElementById('loggedin-username')
 let [usernameCondition, passwordCondition] = [false, false]
 let userLoggedin = false
 
+//LOGIN SYSTEM
 loginPanelButton.addEventListener('click', ()=> {
     $(loginContainer).fadeIn()
 })
 
 loginButton.addEventListener('click', (event)=> {
-    event.preventDefault()
-    console.log('login')
+    loginAttempt(event)
+})
+//login via enter
+document.addEventListener('keydown', (event)=> {
+    if (event.key === 'Enter' && !userLoggedin) {
+        if (loginContainer.style.display === 'block') {
+            loginAttempt(event)
+        }
+    }
 })
 
+function loginAttempt () {
+    [usernameCondition, passwordCondition] = [false, false]
+    event.preventDefault()
+    loginInputsCheck()
+    loginUser()
+}
+
+//REGISTER SYSTEM
 registerButton.addEventListener('click', (event)=> {
     [usernameCondition, passwordCondition] = [false, false]
     event.preventDefault()
-    inputsCheck()
+    registerInputsCheck()
+    registerUser()
     loginUser()
 })
 
-function inputsCheck () {
+function loginInputsCheck () {
+    if (usernameInput.value == '') {
+        usernameMessage.textContent = 'Enter username'
+    } else if (!accountCheck(usernameInput.value)) {
+        usernameMessage.textContent = 'Account does not exist'
+    } else {
+        usernameMessage.textContent = ''
+        usernameCondition = true
+    }
+
+    if (passwordInput.value == '') {
+        passwordMessage.textContent = ''
+        passwordMessage.textContent = 'Enter password'
+    } else if (accountCheck(usernameInput.value) && accountCheck(usernameInput.value).password !== passwordInput.value){
+        passwordMessage.textContent = 'Wrong password'
+    } else {
+        passwordMessage.textContent = ''
+        passwordCondition = true
+    }
+}
+
+function registerInputsCheck () {
     if (usernameInput.value == '') {
         usernameMessage.textContent = 'Enter username'
     } else if (usernameInput.value.length < 6) {
@@ -54,7 +94,7 @@ function inputsCheck () {
 function accountCheck (name) {
     for (x of accounts) {
         if (x.username == name) {
-            return true
+            return x
         }
     }
 }
@@ -66,20 +106,31 @@ closeButton.addEventListener('click', (event)=> {
     usernameInput.value = passwordInput.value = ''
 })
 
-function loginUser() {
+function registerUser() {
     if (usernameCondition && passwordCondition) {
-        alert('done')
         accounts.push(new Account(usernameInput.value, passwordInput.value))
         localStorage.setItem('JSONAccounts', JSON.stringify(accounts))
+    }
+}
+
+function loginUser() {
+    if (usernameCondition && passwordCondition) {
         updateLoginPanel(usernameInput.value)
-        usernameInput.value = ''
-        passwordInput.value = ''
+        usernameInput.value = passwordInput.value = ''
     }
 }
 
 function updateLoginPanel(name) {
     $(loginPanelButton).css('display', 'none')
     $(loginContainer).css('display', 'none')
-    loggedInPanelContainer.textContent = `Logged in as ${name}`
+    $(loggedInUsername).css('display', 'inline')
+    $(loggedInPanelContainer).css('display', 'block')
+    loggedInUsername.textContent = name
     userLoggedin = true
 }
+//Logoff button
+logoffButton.addEventListener('click', ()=> {
+    userLoggedin = false
+    $(loggedInPanelContainer).css('display', 'none')
+    $(loginPanelButton).css('display', 'block')
+})

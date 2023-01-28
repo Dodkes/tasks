@@ -12,16 +12,33 @@ body {
     width: 1920px;
 }
 
+#login-panel-button {
+    cursor: pointer;
+}
+
 #loggedin-panel-container, #login-panel-button {
     width: 20%;
     text-align: center;
     position: absolute;
     top: 0;
     right: 0;
-    cursor: pointer;
     border: none;
     outline: none;
     background-color: transparent;
+}
+
+#loggedin-panel-container {
+    display: none;
+}
+
+#loggedin-panel-container > span {
+    font-size: 15px;
+    display: inline;
+}
+
+#loggedin-username {
+    color: #09cc13;
+    text-shadow: 1px 1px 1px black;
 }
 
 #login-panel-button:hover {
@@ -116,4 +133,21 @@ button:hover{
 
 #close-button:hover {
     color: #33ffbb;
+}
+
+#logoff-button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+i:hover {
+    color: rgb(187, 73, 73);
+}
+
+i {
+    color: black;
+    font-size: 15px;
 }
