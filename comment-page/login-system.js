@@ -14,7 +14,7 @@ const passwordMessage = document.getElementById('password-message')
 const loggedInPanelContainer = document.getElementById('loggedin-panel-container')
 const loggedInUsername = document.getElementById('loggedin-username')
 let [usernameCondition, passwordCondition] = [false, false]
-let userLoggedin = true //ZMENIT NA FALSE ! ! !
+let userLoggedin = false
 
 //LOGIN SYSTEM
 loginPanelButton.addEventListener('click', ()=> {
@@ -133,6 +133,7 @@ function updateLoginPanel(name) {
     $(maincontainer).css('filter', 'blur(0)')
 
 }
+
 //Logoff button
 logoffButton.addEventListener('click', ()=> {
     userLoggedin = false

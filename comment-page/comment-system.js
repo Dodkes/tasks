@@ -13,7 +13,11 @@ addCommentButton.addEventListener('click', ()=> {
         return triggerAlarm('Please login to add comment')
     }
     if (textArea.value !== '') { 
-        return checkBannedWords()
+        checkBannedWords(textArea.value)
+        if (checkBannedWords(textArea.value)) {
+            addComment()
+            textArea.value = ''
+        }
     }
 })
 
@@ -24,8 +28,8 @@ function triggerAlarm (text) {
 }
 
 
-function checkBannedWords () {
-let textSplit = textArea.value.split(' ')
+function checkBannedWords (content) {
+let textSplit = content.split(' ')
 let textToUpperCaseArray = []
 let bannedWordsToUpperCaseArray = []
 let textNode = ''
@@ -46,11 +50,9 @@ let textNode = ''
         }
     }
     if (textNode !== '') {
-        return triggerAlarm(`Please do not use banned words ( ${textNode} )`)
+        triggerAlarm(`Please do not use banned words ( ${textNode} )`)
+        return false
     } else {
-        addComment()
-        textArea.value = ''
+        return true
     }
 }
-
-

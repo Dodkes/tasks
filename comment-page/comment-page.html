@@ -9,6 +9,7 @@
     <script src="login-system.js" defer></script>
     <script src="comment-system.js" defer></script>
     <script src="comment-creator.js" defer></script>
+    <link href="https://fonts.cdnfonts.com/css/lucida-handwriting-std" rel="stylesheet">
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- ICONS -->
@@ -16,38 +17,22 @@
     <title>Comment page</title>
 </head>
 <body>
+    <div id="top-message">Bad</div>
     <div class="main-container">
-        <div id="top-message">Bad</div>
         <button id="login-panel-button">Log in</button>
         <div id="loggedin-panel-container">
             <span>Logged in as </span>
             <span id="loggedin-username"></span>
             <button id="logoff-button"><i title="log off" class="fa-sharp fa-solid fa-right-from-bracket"></i></button>
         </div>
-
         <div id="commented-element">Comment me</div>
         <div id="comment-panel">
             <span id="username-comment"></span>
-            <textarea placeholder="Add comment here.." oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"' name="" id="text-area"></textarea>
+            <textarea placeholder="Add comment here.." id="text-area"></textarea>
             <button id="add-comment-button">Add comment</button>
             <button id="clear-button">Clear</button>
         </div>
-
-
-
-        <!-- HERE -->
-
-        <div id="comment-container">
-
-        </div>
-
-        <!-- HERE -->
-
-
-
-
-
-
+        <div id="comment-container"></div>
     </div>
     <form action="" id="login-container">
         <div class="login-content">
