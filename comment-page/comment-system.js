@@ -23,10 +23,9 @@ addCommentButton.addEventListener('click', ()=> {
 
 function triggerAlarm (text) {
     topMessage.textContent = text
-    $(topMessage).slideDown()
-    setTimeout(() => { $(topMessage).slideUp() }, 1500);
+    topMessage.style.display = 'block'
+    setTimeout(() => { topMessage.style.display = 'none' }, 1500);
 }
-
 
 function checkBannedWords (content) {
 let textSplit = content.split(' ')

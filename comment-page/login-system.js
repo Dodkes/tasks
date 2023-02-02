@@ -18,8 +18,8 @@ let userLoggedin = false
 
 //LOGIN SYSTEM
 loginPanelButton.addEventListener('click', ()=> {
-    $(loginContainer).fadeIn()
-    $(maincontainer).css('filter', 'blur(5px)')
+    loginContainer.style.display = 'block'
+    maincontainer.style.filter = 'blur(5px)'
 })
 
 loginButton.addEventListener('click', (event)=> {
@@ -34,7 +34,7 @@ document.addEventListener('keydown', (event)=> {
     }
 })
 
-function loginAttempt () {
+function loginAttempt (event) {
     [usernameCondition, passwordCondition] = [false, false]
     event.preventDefault()
     loginInputsCheck()
@@ -61,10 +61,9 @@ function loginInputsCheck () {
     }
 
     if (passwordInput.value == '') {
-        passwordMessage.textContent = ''
         passwordMessage.textContent = 'Enter password'
     } else if (accountCheck(usernameInput.value) && accountCheck(usernameInput.value).password !== passwordInput.value){
-        passwordMessage.textContent = 'Wrong password'
+        passwordMessage.textContent = 'authentication failed'
     } else {
         passwordMessage.textContent = ''
         passwordCondition = true
@@ -103,8 +102,8 @@ function accountCheck (name) {
 
 closeButton.addEventListener('click', (event)=> {
     event.preventDefault()
-    $(loginContainer).fadeOut()
-    $(maincontainer).css('filter', 'blur(0)')
+    loginContainer.style.display = 'none'
+    maincontainer.style.filter = 'blur(0)'
     usernameMessage.textContent = passwordMessage.textContent = ''
     usernameInput.value = passwordInput.value = ''
 })
@@ -124,19 +123,20 @@ function loginUser() {
 }
 
 function updateLoginPanel(name) {
-    $(loginPanelButton).css('display', 'none')
-    $(loginContainer).css('display', 'none')
-    $(loggedInUsername).css('display', 'inline')
-    $(loggedInPanelContainer).css('display', 'block')
+    displayElements([loginPanelButton, loginContainer], 'none', [loggedInUsername], 'inline', [loggedInPanelContainer], 'block')
     loggedInUsername.textContent = name
     userLoggedin = true
-    $(maincontainer).css('filter', 'blur(0)')
-
+    maincontainer.style.filter = 'blur(0)'
 }
 
 //Logoff button
 logoffButton.addEventListener('click', ()=> {
     userLoggedin = false
-    $(loggedInPanelContainer).css('display', 'none')
-    $(loginPanelButton).css('display', 'block')
+    displayElements([loggedInPanelContainer], 'none', loginPanelButton, 'block')
 })
+
+function displayElements (elementsArray1, display1, elementsArray2, display2, elementsArray3, display3) {
+    elementsArray1.forEach(element => { element.style.display = display1 });
+    elementsArray2.forEach(element => { element.style.display = display2 });
+    elementsArray3.forEach(element => { element.style.display = display3 });
+}
