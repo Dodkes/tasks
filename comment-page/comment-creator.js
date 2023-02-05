@@ -61,6 +61,7 @@ class Comment {
 
 function addComment () {
     new Comment().commentElement()
+    
 }
 
 function getDate () {

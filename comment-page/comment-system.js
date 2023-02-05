@@ -2,7 +2,15 @@ const addCommentButton = document.getElementById('add-comment-button')
 const textArea = document.getElementById('text-area')
 const topMessage = document.getElementById('top-message')
 const clearButton = document.getElementById('clear-button')
-const bannedWords = ['Putin', 'Ukraine', 'Russia', 'War']
+let bannedWords
+
+
+fetch('./bannedWords.json')
+.then(res => res.text())
+.then(data => {
+    bannedWords = JSON.parse(data).words
+})
+
 
 clearButton.addEventListener('click', ()=> {
     textArea.value = ''
