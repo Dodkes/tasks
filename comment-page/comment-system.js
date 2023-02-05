@@ -21,7 +21,7 @@ addCommentButton.addEventListener('click', ()=> {
         return triggerAlarm('Please login to add comment')
     }
     if (textArea.value !== '') { 
-        checkBannedWords(textArea.value)
+
         if (checkBannedWords(textArea.value)) {
             addComment()
             textArea.value = ''
@@ -35,31 +35,37 @@ function triggerAlarm (text) {
     setTimeout(() => { topMessage.style.display = 'none' }, 1500);
 }
 
+
+
+
+
+
+const worker = new Worker('worker.js')
+
 function checkBannedWords (content) {
-let textSplit = content.split(' ')
-let textToUpperCaseArray = []
-let bannedWordsToUpperCaseArray = []
-let textNode = ''
+    worker.postMessage(content)
 
-    textSplit.forEach(element => {
-        textToUpperCaseArray.push(element.toUpperCase())
-    });
+    // worker.onmessage = (message) =>{ 
+    //     if (message.data !== '') {
+    //         triggerAlarm(`Please do not use banned words ( ${message.data} )`)
+    //         return false
+    //     } else {
+    //         alert('approved')
+    //         return true
+    //     }
+    //     }
+}
 
-    bannedWords.forEach(element => {
-        bannedWordsToUpperCaseArray.push(element.toUpperCase())
-    })
-
-    for (x in textToUpperCaseArray) {
-        if (bannedWordsToUpperCaseArray.includes(textToUpperCaseArray[x])) {
-            if (!textNode.includes(textToUpperCaseArray[x])) {
-                textNode += ' ' + textToUpperCaseArray[x] 
-            }
-        }
-    }
-    if (textNode !== '') {
-        triggerAlarm(`Please do not use banned words ( ${textNode} )`)
+worker.onmessage = (message) =>{ 
+    if (message.data !== '') {
+        triggerAlarm(`Please do not use banned words ( ${message.data} )`)
         return false
     } else {
+        alert('approved')
         return true
     }
-}
+    }
+
+
+//Nastudovat callback
+//https://stackoverflow.com/questions/21518381/proper-way-to-wait-for-one-function-to-finish-before-continuing

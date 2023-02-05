@@ -1,15 +1,35 @@
+
+let bannedWords
+
+fetch('./bannedWords.json')
+.then(res => res.text())
+.then(data => {
+    bannedWords = JSON.parse(data).words
+})
+
 //worker listens on the message
 onmessage = (message) => {
-    for (i = 0; i < 999999999; i++) {
-        i++
+
+let textSplit = message.data.split(' ')
+let textToUpperCaseArray = []
+let bannedWordsToUpperCaseArray = []
+let textNode = ''
+
+    textSplit.forEach(element => {
+        textToUpperCaseArray.push(element.toUpperCase())
+    });
+
+    bannedWords.forEach(element => {
+        bannedWordsToUpperCaseArray.push(element.toUpperCase())
+    })
+
+    for (x in textToUpperCaseArray) {
+        if (bannedWordsToUpperCaseArray.includes(textToUpperCaseArray[x])) {
+            if (!textNode.includes(textToUpperCaseArray[x])) {
+                textNode += ' ' + textToUpperCaseArray[x] 
+            }
+        }
     }
-    postMessage(i)
+
+    postMessage(textNode)
 }
-
-// const worker = new Worker('worker.js')
-// worker.postMessage('Hi')
-
-
-// worker.onmessage = (message) => {
-//     alert(message.data)
-// }
