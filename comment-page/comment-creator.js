@@ -30,29 +30,28 @@ class Comment {
                 return
             } else if (!userLoggedin) {
                     return triggerAlarm('Please login to add comment')
-            } else if (checkBannedWords(this.commentInput.value)) {
-                new Comment().createReplyElement(this.commentInput.value)
+            } else {
+                checkBannedWords(this.commentInput.value, 'reply', event.target) 
                 this.commentInput.value = ''
             }
         })
     }
-    createReplyElement(repliedText) {
+    createReplyElement(repliedText, clickedElement) {
         this.header.textContent = `➥${loggedInUsername.textContent} replied at ${getDate()}`
         this.content.textContent = repliedText
         this.content.style.wordWrap = 'break-word' //prevent long word floating outside of div
         this.header.classList.add('reply-comment')
         this.container.style.width = '600px'
         this.container.style.marginLeft = '20px'
-        console.log(this.container.style.marginLeft)
-        event.target.parentElement.appendChild(this.container)
+        clickedElement.parentElement.appendChild(this.container)
 
         this.replyButton.addEventListener('click', ()=> {
             if (this.commentInput.value == '') {
                 return
             } else if (!userLoggedin) {
                     return triggerAlarm('Please login to add comment')
-            } else if (checkBannedWords(this.commentInput.value)) {
-                new Comment().createReplyElement(this.commentInput.value)
+            } else {
+                checkBannedWords(this.commentInput.value, 'reply', event.target) 
                 this.commentInput.value = ''
             }
         })
@@ -61,7 +60,6 @@ class Comment {
 
 function addComment () {
     new Comment().commentElement()
-    
 }
 
 function getDate () {
