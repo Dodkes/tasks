@@ -1,7 +1,7 @@
 const commentContainer = document.getElementById('comment-container')
 
 class Comment {
-    constructor () {
+    constructor (commentValue, date) {
         this.container = document.createElement('div')
         this.container.style.marginBottom = '10px'
         this.header = document.createElement('div')
@@ -16,13 +16,15 @@ class Comment {
         this.container.appendChild(this.replyButton)
         this.replyButton.textContent = 'Reply'
         this.replyButton.classList.add('reply-button')
+        this.commentValue = commentValue
+        this.date = date
     }
-    commentElement () {
+    renderComment () {
         commentContainer.appendChild(this.container)
         this.header.classList.add('comment-header')
-        this.content.textContent = textArea.value
+        this.content.textContent = this.commentValue
         this.content.style.wordWrap = 'break-word' //prevent long word floating outside of div
-        this.header.textContent = `${loggedInUsername.textContent} commented at ${getDate()}`
+        this.header.textContent = `${loggedInUsername.textContent} commented at ${this.date}`
         this.container.style.maxWidth = '100%'
 
         this.replyButton.addEventListener('click', ()=> {
@@ -56,10 +58,6 @@ class Comment {
             }
         })
     }
-}
-
-function addComment () {
-    new Comment().commentElement()
 }
 
 function getDate () {

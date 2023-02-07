@@ -2,6 +2,14 @@ const addCommentButton = document.getElementById('add-comment-button')
 const textArea = document.getElementById('text-area')
 const topMessage = document.getElementById('top-message')
 const clearButton = document.getElementById('clear-button')
+let comments
+
+if (localStorage.getItem('comments')) {
+    comments = JSON.parse(localStorage.getItem('comments'))
+    renderStoredComments(comments)
+} else {
+    comments = []
+}
 
 clearButton.addEventListener('click', ()=> {
     textArea.value = ''
@@ -33,7 +41,31 @@ function checkBannedWords (content, commentType, clickedElement) {
             addComment()
             textArea.value = ''
         } else if (commentType === 'reply') {
-            new Comment().createReplyElement(content, clickedElement)
+            addReply(content, clickedElement)
         }
+    }
+}
+
+function addComment () {
+    let comment = new Comment(textArea.value, getDate())
+    comment.renderComment()
+    saveCommentsToLocalStorage(comment)
+}
+
+function addReply (content, clickedElement) {
+    new Comment().createReplyElement(content, clickedElement)
+}
+
+function saveCommentsToLocalStorage (comment) {
+    comments.push(comment)
+    localStorage.setItem('comments', JSON.stringify(comments))
+}
+
+
+//CONTINUE HERE
+function renderStoredComments (commentsArray) {
+    for (let i = 0; i < commentsArray.length; i++) {
+        console.log(commentsArray[i])
+        // let newComment = new Comment(commentsArray[i].commentValue, commentsArray[i].date)
     }
 }

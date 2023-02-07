@@ -132,7 +132,8 @@ function updateLoginPanel(name) {
 //Logoff button
 logoffButton.addEventListener('click', ()=> {
     userLoggedin = false
-    displayElements([loggedInPanelContainer], 'none', loginPanelButton, 'block')
+    loggedInPanelContainer.style.display = 'none'
+    loginPanelButton.style.display = 'block'
 })
 
 function displayElements (elementsArray1, display1, elementsArray2, display2, elementsArray3, display3) {
