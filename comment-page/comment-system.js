@@ -47,7 +47,7 @@ function checkBannedWords (content, commentType, clickedElement) {
 }
 
 function addComment () {
-    let comment = new Comment(textArea.value, getDate())
+    let comment = new Comment(textArea.value, getDate(), loggedInUsername.textContent)
     comment.renderComment()
     saveCommentsToLocalStorage(comment)
 }
@@ -66,6 +66,7 @@ function saveCommentsToLocalStorage (comment) {
 function renderStoredComments (commentsArray) {
     for (let i = 0; i < commentsArray.length; i++) {
         console.log(commentsArray[i])
-        // let newComment = new Comment(commentsArray[i].commentValue, commentsArray[i].date)
+        let newComment = new Comment(commentsArray[i].commentValue, commentsArray[i].date, commentsArray[i].user)
+        newComment.renderComment()
     }
 }
