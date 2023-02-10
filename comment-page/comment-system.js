@@ -53,7 +53,12 @@ function addComment () {
 }
 
 function addReply (content, clickedElement) {
-    new Comment().createReplyElement(content, clickedElement)
+    new Comment(textArea.value, getDate(), loggedInUsername.textContent).createReplyElement(content, clickedElement)
+
+    
+    //DO TOHTO ELEMENTU BUDEM APENDOVAT REPLIES
+    //TREBA ZISTIT KU KTOREMU COMMENTU PATRI REPLY A ULOZIT DO LOCAL STORAGE
+    console.log(clickedElement.parentElement)
 }
 
 function saveCommentsToLocalStorage (comment) {
@@ -62,11 +67,19 @@ function saveCommentsToLocalStorage (comment) {
 }
 
 
-//CONTINUE HERE
+//Rendering comments
 function renderStoredComments (commentsArray) {
     for (let i = 0; i < commentsArray.length; i++) {
-        console.log(commentsArray[i])
         let newComment = new Comment(commentsArray[i].commentValue, commentsArray[i].date, commentsArray[i].user)
         newComment.renderComment()
     }
 }
+
+
+//kazdemu komentu comment aj reply budem priradzovat specificke ID
+//ulozim do local strage
+//nasledne po kliknuti na reply zistim ID parent elementu a do tohto budem appendovat reply
+//cize spravim nove pole objektov, kde bude ID parentu, a reply objeky z ktoreho budem renderovat
+
+//Mozem pridat delete button, na deletovanie komentov/reply a vymaze to vsetky child elementy a
+//podla toho aj vymaze z local storage
