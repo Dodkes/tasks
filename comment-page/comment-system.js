@@ -61,13 +61,13 @@ function addComment () {
 }
 
 function addReply (content, clickedElement) {
-    let reply = new Comment(textArea.value, getDate(), loggedInUsername.textContent, uniqeID ())
+    let reply = new Comment(content, getDate(), loggedInUsername.textContent, uniqeID ())
     reply.createReplyElement(content, clickedElement)
     
     //DO TOHTO ELEMENTU BUDEM APENDOVAT REPLIES
     console.log(clickedElement.parentElement.id)
     saveRepliesToLocalStorage(reply)
-    console.log(reply)
+    console.log(reply.commentValue)
 }
 
 function saveCommentsToLocalStorage (comment) {
