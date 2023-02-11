@@ -1,8 +1,9 @@
 const commentContainer = document.getElementById('comment-container')
 
 class Comment {
-    constructor (commentValue, date, user) {
+    constructor (commentValue, date, user, id) {
         this.container = document.createElement('div')
+        this.container.id = id
         this.container.style.marginBottom = '10px'
         this.header = document.createElement('div')
         this.content = document.createElement('div')
@@ -19,6 +20,7 @@ class Comment {
         this.commentValue = commentValue
         this.date = date
         this.user = user
+        this.id = id
     }
     renderComment () {
         commentContainer.appendChild(this.container)
