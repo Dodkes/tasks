@@ -13,6 +13,7 @@ if (localStorage.getItem('comments')) {
 
 if (localStorage.getItem('replies')) {
     replies = JSON.parse(localStorage.getItem('replies'))
+    renderStoredReplies (replies)
 } else {
     replies = []
 }
@@ -65,7 +66,8 @@ function addReply (content, clickedElement) {
     reply.createReplyElement(content, clickedElement)
     
     //DO TOHTO ELEMENTU BUDEM APENDOVAT REPLIES
-    console.log(clickedElement.parentElement.id)
+    reply.parentId = Number(clickedElement.parentElement.id)
+    console.log('This reply should be appended to ID ' + clickedElement.parentElement.id)
     saveRepliesToLocalStorage(reply)
     console.log(reply.commentValue)
 }
@@ -88,6 +90,14 @@ function renderStoredComments (commentsArray) {
     }
 }
 
+function renderStoredReplies (repliesArray) {
+    for (let i = 0; i < repliesArray.length; i++) {
+        let newReply = new Comment(repliesArray[i].commentValue, repliesArray[i].date, repliesArray[i].user, repliesArray[i].id)
+        let getParentElement = document.getElementById(repliesArray[i].parentId)
+        newReply.createReplyElement(repliesArray[i].commentValue, getParentElement, 'render')
+    }
+}
+
 function uniqeID () {
     let id = 0
     if (localStorage.getItem('ID')) {
@@ -97,20 +107,3 @@ function uniqeID () {
         localStorage.setItem('ID', JSON.stringify(id))
     return id
 }
-
-//kazdemu komentu comment aj reply budem priradzovat specificke ID
-//ulozim do local strage
-//nasledne po kliknuti na reply zistim ID parent elementu a do tohto budem appendovat reply
-//cize spravim nove pole objektov, kde bude ID parentu, a reply objeky z ktoreho budem renderovat
-//vzdy len ked kliknem na add reply nech zistuje a uklada parent element
-
-
-//Mozem pridat delete button, na deletovanie komentov/reply a vymaze to vsetky child elementy a
-//podla toho aj vymaze z local storage
-
-
-
-
-//CO MAM SPRAVENE ->
-//Elementy uz dostavaju unikatne ID
-//Replies savujem do local storage

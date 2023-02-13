@@ -41,14 +41,16 @@ class Comment {
             }
         })
     }
-    createReplyElement(repliedText, clickedElement) {
-        this.header.textContent = `➥${this.user} replied at ${getDate()}`
+    createReplyElement(repliedText, clickedElement, render) {
+        this.header.textContent = `➥${this.user} replied at ${this.date}`
         this.content.textContent = repliedText
         this.content.style.wordWrap = 'break-word' //prevent long word floating outside of div
         this.header.classList.add('reply-comment')
         this.container.style.width = '600px'
         this.container.style.marginLeft = '20px'
-        clickedElement.parentElement.appendChild(this.container)
+
+        render ? clickedElement.appendChild(this.container) : clickedElement.parentElement.appendChild(this.container)
+        // clickedElement.parentElement.appendChild(this.container)
 
         this.replyButton.addEventListener('click', ()=> {
             if (this.commentInput.value == '') {
