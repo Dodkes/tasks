@@ -1,4 +1,3 @@
-
 let bannedWords
 
 fetch('./bannedWords.json')

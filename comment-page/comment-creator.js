@@ -21,6 +21,28 @@ class Comment {
         this.date = date
         this.user = user
         this.id = id
+
+
+
+
+        this.removeButton = document.createElement('button')
+        this.removeButton.style.marginTop = '10px'
+        this.removeButton.style.marginLeft = '5px'
+        this.container.appendChild(this.removeButton)
+        this.removeButton.textContent = 'Remove'
+        this.removeButton.classList.add('reply-button')
+
+
+        this.removeButton.addEventListener('click', ()=> {
+            if (!userLoggedin) {
+                return triggerAlarm('Please login to remove comment')
+            } else if(this.user == loggedInUsername.textContent) {
+                this.container.remove()
+                //Update local storage here
+            }
+        })
+
+
     }
     renderComment () {
         commentContainer.appendChild(this.container)
@@ -48,10 +70,7 @@ class Comment {
         this.header.classList.add('reply-comment')
         this.container.style.width = '600px'
         this.container.style.marginLeft = '20px'
-
         render ? clickedElement.appendChild(this.container) : clickedElement.parentElement.appendChild(this.container)
-        // clickedElement.parentElement.appendChild(this.container)
-
         this.replyButton.addEventListener('click', ()=> {
             if (this.commentInput.value == '') {
                 return

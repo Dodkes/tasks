@@ -18,8 +18,6 @@ if (localStorage.getItem('replies')) {
     replies = []
 }
 
-
-
 clearButton.addEventListener('click', ()=> {
     textArea.value = ''
 })
@@ -64,12 +62,8 @@ function addComment () {
 function addReply (content, clickedElement) {
     let reply = new Comment(content, getDate(), loggedInUsername.textContent, uniqeID ())
     reply.createReplyElement(content, clickedElement)
-    
-    //DO TOHTO ELEMENTU BUDEM APENDOVAT REPLIES
     reply.parentId = Number(clickedElement.parentElement.id)
-    console.log('This reply should be appended to ID ' + clickedElement.parentElement.id)
     saveRepliesToLocalStorage(reply)
-    console.log(reply.commentValue)
 }
 
 function saveCommentsToLocalStorage (comment) {
@@ -89,7 +83,7 @@ function renderStoredComments (commentsArray) {
         newComment.renderComment()
     }
 }
-
+//Rendering replies
 function renderStoredReplies (repliesArray) {
     for (let i = 0; i < repliesArray.length; i++) {
         let newReply = new Comment(repliesArray[i].commentValue, repliesArray[i].date, repliesArray[i].user, repliesArray[i].id)
