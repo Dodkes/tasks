@@ -22,9 +22,7 @@ class Comment {
         this.user = user
         this.id = id
 
-
-
-
+        //Remove button
         this.removeButton = document.createElement('button')
         this.removeButton.style.marginTop = '10px'
         this.removeButton.style.marginLeft = '5px'
@@ -32,17 +30,41 @@ class Comment {
         this.removeButton.textContent = 'Remove'
         this.removeButton.classList.add('reply-button')
 
-
         this.removeButton.addEventListener('click', ()=> {
             if (!userLoggedin) {
                 return triggerAlarm('Please login to remove comment')
-            } else if(this.user == loggedInUsername.textContent) {
+            } else if (this.user == loggedInUsername.textContent) {
                 this.container.remove()
-                //Update local storage here
+                //UPDATE LOCAL STORAGE BELOW
+                //Remove clicked element from LS
+                popFromLS(this.container.id, comments)
+                localStorage.setItem('comments', JSON.stringify(comments))
+                popFromLS(this.container.id, replies)
+                localStorage.setItem('replies', JSON.stringify(replies))
+
+                loopChilds(this.container.childNodes)
+
+                function loopChilds (loopedItem) {
+                    for (x of loopedItem) {
+                        if (x.children.length > 0) { //ak childs v kliknutom containeri maju nejake childs
+                            // console.log(x.id) //konzolujeme pozadovane child containere
+                            popFromLS (Number(x.id), replies)
+                            popFromLS (Number(x.id), comments)
+                            loopChilds (x.childNodes)
+                        }
+                    }
+                    localStorage.setItem('replies', JSON.stringify(replies))
+                }
+                function popFromLS (popId, array) {
+                    for (let x of array) {
+                        if (popId == x.id) {
+                            let positionOfMatch = array.indexOf(x)
+                            array.splice(positionOfMatch, 1)
+                        }
+                    }
+                }
             }
         })
-
-
     }
     renderComment () {
         commentContainer.appendChild(this.container)
